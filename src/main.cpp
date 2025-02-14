@@ -58,7 +58,7 @@ int main()
     {
         std::cout << static_cast<int>(message.symbols[i]);
         if (i < WsprMessage::size - 1)
-        { 
+        {
             std::cout << ","; // Append a comma except for the last element
         }
     }
