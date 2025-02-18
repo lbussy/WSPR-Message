@@ -67,7 +67,7 @@ After compiling, run the test program:
 ./test_wspr
 ```
 
-**Example Output**
+Example Output:
 
 ```txt
 Callsign: AA0NT
@@ -132,3 +132,33 @@ This project is open-source under the MIT License. See [LICENSE](LICENSE.md) for
 ## 🛠️ Maintainers
 
 - Lee C. Bussy (@LBussy)
+
+---
+
+## The WSPR Protocol
+
+The type of radio emission is “F1D”, frequency-shift keying. A message contains a station's callsign, Maidenhead grid locator, and transmitter power in dBm.The WSPR protocol compresses the information in the message into 50 bits (binary digits). These are encoded using a convolutional code with constraint length K = 32 and a rate of r = 1⁄2. The long constraint length makes undetected decoding errors less probable, at the cost that the highly efficient Viterbi algorithm must be replaced by a simple sequential algorithm for the decoding process.
+Protocol specification
+
+The standard message is `<callsign>` + `<4 character locator>` + `<dBm transmit power>`; for example “`K1ABC FN20 37`” is a signal from station K1ABC in Maidenhead grid cell “FN20”, sending 37 dBm, or about 5.0 W (legal limit for 630 m). Messages with a compound callsign and/or 6 digit locator use a two-transmission sequence. The first transmission carries compound callsign and power level, or standard callsign, 4 digit locator, and power level; the second transmission carries a hashed callsign, 6 digit locator, and power level. Add-on prefixes can be up to three alphanumeric characters; add-on suffixes can be a single letter or one or two digits.
+
+- Fields of a standard message:
+  - 28 bits for callsign,
+  - 15 bits for locator,
+  - 5 bits for power level,
+  - 2 bits for message type,
+  - Total: 50 bits.
+- Forward error correction (FEC): Non-recursive convolutional code with constraint length K = 32, rate r = 1⁄2.
+- Number of binary channel symbols: nsym = (50 + K − 1) × 2 = 162.
+- Keying rate is 12000⁄8192 = 1.4648 baud.
+- Modulation is continuous phase 4 FSK, with 1.4648 Hz tone separation.
+- Occupied bandwidth is about 6 Hz
+- Synchronization is via a 162 bit pseudo-random sync vector.
+- Each channel symbol conveys one sync bit (LSB) and one data bit (MSB).
+- Duration of transmission is 162 × 8192⁄12000 = 110.6 s.
+- Transmissions nominally start one second into an even UTC minute: e.g., at hh:00:01, hh:02:01, etc.
+- Minimum S/N for reception is around –34 dB on the WSJT scale (2500 Hz reference bandwidth).
+
+### WSPR Links
+
+- [WSPR - This page is a collection of notes and resources related to WSPR transmission and reception.](https://swharden.com/software/FSKview/wspr/)
