@@ -262,15 +262,15 @@ unsigned char WsprMessage::reverse_bits(unsigned char b)
  *       Each iteration removes the least significant set bit, ensuring O(k) complexity,
  *       where k is the number of bits set in `x`.
  */
-int WsprMessage::calculate_parity(uint32_t x)
+int WsprMessage::calculate_parity(uint32_t ch)
 {
     int even = 0; // Tracks parity (0 = even, 1 = odd)
 
     // Iterate through all set bits using Kernighan’s algorithm
-    while (x)
+    while (ch)
     {
         even = 1 - even;  // Toggle parity
-        x = x & (x - 1);  // Remove the lowest set bit
+        ch = ch & (ch - 1);  // Remove the lowest set bit
     }
 
     return even; // Returns 1 for odd parity, 0 for even parity

@@ -74,7 +74,7 @@ private:
      * @param ch The character to convert.
      * @return Numeric value of the character.
      */
-    int get_character_value(char ch);
+    static int get_character_value(char ch);
 
     /**
      * @brief Calculates the parity bit for a given value.
@@ -82,7 +82,7 @@ private:
      * @param ch The value to calculate parity for.
      * @return Parity bit (0 or 1).
      */
-    int calculate_parity(uint32_t ch);
+    static int calculate_parity(uint32_t ch);
 
     /**
      * @brief Reverses the bit order for address calculation.
@@ -90,7 +90,7 @@ private:
      * @param reverseAddressIndex Reference to the current address index.
      * @return Reversed bit address.
      */
-    unsigned char reverse_address(unsigned char &reverseAddressIndex);
+    static unsigned char reverse_address(unsigned char &reverseAddressIndex);
 
     /**
      * @brief Reverses the bits in a byte.
@@ -98,14 +98,14 @@ private:
      * @param b The byte to reverse.
      * @return The reversed byte.
      */
-    unsigned char reverse_bits(unsigned char b);
+    static unsigned char reverse_bits(unsigned char b);
 
     /**
      * @brief Converts a string to uppercase.
      *
      * @param str The string to convert.
      */
-    void to_upper(std::string &str);
+    static void to_upper(std::string &str);
 
     /**
      * @brief Generates WSPR symbols based on callsign, location, and power.
