@@ -38,12 +38,14 @@
 int main()
 {
     // Define callsign, Maidenhead grid location, and power level
-    std::string callsign = "AA0NT";  ///< Amateur radio callsign (uppercase, max 6 characters)
-    std::string location = "EM18";   ///< Maidenhead grid locator (4 characters, uppercase)
-    int power = 20;                  ///< Transmission power level in dBm
+    std::string callsign = "AA0NT"; ///< Amateur radio callsign (uppercase, max 6 characters)
+    std::string location = "EM18";  ///< Maidenhead grid locator (4 characters, uppercase)
+    int power = 20;                 ///< Transmission power level in dBm
 
     // Create a WSPR message instance
-    WsprMessage message(callsign, location, power);
+    // WsprMessage wMessage(callsign, location, power);
+    WsprMessage wMessage;
+    wMessage.set_message_parameters("K1ABC", "EM18", 20);
 
     // Display input parameters
     std::cout << "Callsign: " << callsign << "\n";
@@ -56,7 +58,7 @@ int main()
     // Print symbols
     for (int i = 0; i < WsprMessage::size; ++i)
     {
-        std::cout << static_cast<int>(message.symbols[i]);
+        std::cout << static_cast<int>(wMessage.symbols[i]);
         if (i < WsprMessage::size - 1)
         {
             std::cout << ","; // Append a comma except for the last element

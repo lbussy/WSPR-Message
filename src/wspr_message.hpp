@@ -26,9 +26,9 @@
 #ifndef WSPR_MESSAGE_H
 #define WSPR_MESSAGE_H
 
-#include <cstdint>      // For: uint32_t
-#include <string>       // For: std::string
-#include <algorithm>    // For std::transform
+#include <cstdint>   // For: uint32_t
+#include <string>    // For: std::string
+#include <algorithm> // For std::transform
 
 /**
  * @brief Defines the size of the WSPR message in bits.
@@ -50,6 +50,26 @@ public:
      * @param power The power level in dBm.
      */
     WsprMessage(const std::string &callsign, const std::string &location, int power);
+
+    /**
+     * @brief Default constructor for WsprMessage.
+     *
+     * Allows the creation of a WsprMessage without immediate initialization.
+     */
+    WsprMessage();
+
+    /**
+     * @brief Sets the message parameters (callsign, location, power) after construction.
+     *
+     * This method enables setting the parameters on an object created via the default constructor.
+     * It returns a reference to the object, so it can be chained if desired.
+     *
+     * @param callsign The callsign to encode.
+     * @param location The Maidenhead grid locator (4-character format, e.g., "EM18").
+     * @param power The transmission power level in dBm.
+     * @return A reference to this WsprMessage instance.
+     */
+    WsprMessage &set_message_parameters(const std::string &callsign, const std::string &location, int power);
 
     /**
      * @brief Destructor for WsprMessage.

@@ -43,6 +43,15 @@ const unsigned char sync[] = {
     0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0};
 
 /**
+ * @brief Default constructor.
+ *
+ * This constructor initializes the WsprMessage object by setting the
+ * symbols pointer to nullptr, ensuring that it does not point to any
+ * allocated memory until the message parameters are set.
+ */
+WsprMessage::WsprMessage() : symbols(nullptr) {}
+
+/**
  * @brief Constructs a WSPR message from a callsign, grid location, and power level.
  *
  * @param callsign The callsign to encode. Must be a valid amateur radio callsign.
@@ -72,6 +81,35 @@ WsprMessage::WsprMessage(const std::string &callsign, const std::string &locatio
     generate_wspr_symbols(mod_callsign, mod_location, power);
 }
 
+WsprMessage &WsprMessage::set_message_parameters(const std::string &callsign, const std::string &location, int power)
+{
+    // Validate input length to prevent out-of-range errors
+    if (callsign.empty() || location.length() != 4)
+    {
+        throw std::invalid_argument("Invalid callsign or location format.");
+    }
+
+    // Free any previously allocated symbols if they exist
+    if (symbols != nullptr)
+    {
+        delete[] symbols;
+        symbols = nullptr;
+    }
+
+    // Create modifiable copies for processing
+    std::string mod_callsign = callsign;
+    std::string mod_location = location;
+
+    // Convert callsign and location to uppercase to comply with WSPR encoding rules
+    to_upper(mod_callsign);
+    to_upper(mod_location);
+
+    // Generate the WSPR symbols based on the processed callsign, location, and power
+    generate_wspr_symbols(mod_callsign, mod_location, power);
+
+    return *this;
+}
+
 /**
  * @brief Converts a given string to uppercase.
  *
@@ -89,7 +127,8 @@ void WsprMessage::to_upper(std::string &str)
     }
 
     std::transform(str.begin(), str.end(), str.begin(),
-                   [](unsigned char c) { return std::toupper(c); });
+                   [](unsigned char c)
+                   { return std::toupper(c); });
 }
 
 /**
@@ -269,8 +308,8 @@ int WsprMessage::calculate_parity(uint32_t ch)
     // Iterate through all set bits using Kernighan’s algorithm
     while (ch)
     {
-        even = 1 - even;  // Toggle parity
-        ch = ch & (ch - 1);  // Remove the lowest set bit
+        even = 1 - even;    // Toggle parity
+        ch = ch & (ch - 1); // Remove the lowest set bit
     }
 
     return even; // Returns 1 for odd parity, 0 for even parity
