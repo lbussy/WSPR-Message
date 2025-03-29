@@ -43,6 +43,14 @@ class WsprMessage
 {
 public:
     /**
+     * @brief Default constructor for WsprMessage.
+     *
+     * Initializes the WsprMessage object by setting the symbols pointer to nullptr,
+     * ensuring that no memory is allocated until message parameters are set.
+     */
+    inline WsprMessage() : symbols(nullptr) {}
+
+    /**
      * @brief Constructor for WsprMessage.
      *
      * @param callsign The callsign to encode.
@@ -50,13 +58,6 @@ public:
      * @param power The power level in dBm.
      */
     WsprMessage(const std::string &callsign, const std::string &location, int power);
-
-    /**
-     * @brief Default constructor for WsprMessage.
-     *
-     * Allows the creation of a WsprMessage without immediate initialization.
-     */
-    WsprMessage();
 
     /**
      * @brief Sets the message parameters (callsign, location, power) after construction.

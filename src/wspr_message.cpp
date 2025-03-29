@@ -43,15 +43,6 @@ const unsigned char sync[] = {
     0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0};
 
 /**
- * @brief Default constructor.
- *
- * This constructor initializes the WsprMessage object by setting the
- * symbols pointer to nullptr, ensuring that it does not point to any
- * allocated memory until the message parameters are set.
- */
-WsprMessage::WsprMessage() : symbols(nullptr) {}
-
-/**
  * @brief Constructs a WSPR message from a callsign, grid location, and power level.
  *
  * @param callsign The callsign to encode. Must be a valid amateur radio callsign.
