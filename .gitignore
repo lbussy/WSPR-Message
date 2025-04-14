@@ -2,7 +2,9 @@
 *.err
 *.log
 *.bak
+wspr
 test_wspr
+build/
 
 # Prerequisites
 *.d

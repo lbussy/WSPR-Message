@@ -27,7 +27,33 @@
 #include <iostream>
 
 /**
- * @file main.cpp
+ * @brief Outputs WSPR symbol values to the console.
+ *
+ * Iterates over an array of WSPR symbols and prints each symbol as an
+ * integer, separated by commas. The output ends with a newline.
+ *
+ * This function is typically used for debugging or verification of
+ * symbol generation logic.
+ *
+ * @param symbols Pointer to the array of WSPR symbols to be printed.
+ * @param count Number of symbols in the array.
+ */
+void process_symbols(const uint8_t* symbols, std::size_t count)
+{
+    for (std::size_t i = 0; i < count; ++i)
+    {
+        {
+            std::cout << static_cast<int>(symbols[i]);
+            if (i < count - 1)
+            {
+                std::cout << ","; // Append a comma except for the last element
+            }
+        }
+    }
+    std::cout << std::endl;
+}
+
+/**
  * @brief Demonstrates the usage of the WsprMessage class to generate WSPR symbols.
  *
  * @return 0 on successful execution.
@@ -45,26 +71,14 @@ int main()
     // Create a WSPR message instance
     // WsprMessage wMessage(callsign, location, power);
     WsprMessage wMessage;
-    wMessage.set_message_parameters("K1ABC", "EM18", 20);
+    wMessage.set_message_parameters(callsign, location, 20);
 
     // Display input parameters
-    std::cout << "Callsign: " << callsign << "\n";
-    std::cout << "Location: " << location << "\n";
-    std::cout << "Power: " << power << " dBm\n";
+    std::cout << "Callsign: " << callsign << std::endl;
+    std::cout << "Location: " << location << std::endl;
+    std::cout << "Power: " << power << " dBm" << std::endl;
 
-    // Output the generated WSPR symbols
-    std::cout << "Generated WSPR symbols:\n";
-
-    // Print symbols
-    for (int i = 0; i < WsprMessage::size; ++i)
-    {
-        std::cout << static_cast<int>(wMessage.symbols[i]);
-        if (i < WsprMessage::size - 1)
-        {
-            std::cout << ","; // Append a comma except for the last element
-        }
-    }
-    std::cout << std::endl;
+    process_symbols(wMessage.symbols, WsprMessage::size);
 
     return 0; // Indicate successful execution
 }
